@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Books | LIBRIX</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: white;
+            padding: 18px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #172554;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #172554;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .logout {
+            background: #172554;
+            color: white !important;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+        }
+
+        .logout:hover {
+            background: #2563eb;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+
+            margin: 45px auto;
+        }
+
+        .label {
+            color: #2563eb;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 40px;
+            color: #172554;
+
+            margin: 8px 0;
+        }
+
+        .subtitle {
+            color: #64748b;
+
+            font-size: 18px;
+
+            margin-bottom: 30px;
+        }
+
+        /* ================= FLASH ================= */
+
+        .flash {
+            padding: 14px 18px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+        }
+
+        .flash.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .flash.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* ================= BOOK CARD ================= */
+
+        .issue-card {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 15px;
+
+            margin-bottom: 20px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+
+            border: 1px solid #e5e7eb;
+        }
+
+        .book-name {
+            font-size: 24px;
+
+            color: #172554;
+
+            margin: 0 0 15px 0;
+        }
+
+        .book-info {
+            color: #475569;
+
+            margin: 10px 0;
+
+            font-size: 16px;
+        }
+
+        .book-info strong {
+            color: #111827;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            font-weight: bold;
+
+            margin-top: 18px;
+        }
+
+        .issued {
+            color: #2563eb;
+        }
+
+        .returned {
+            color: #16a34a;
+        }
+
+        .overdue {
+            color: #dc2626;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            margin-top: 20px;
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .view-btn {
+            background: #172554;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: #2563eb;
+        }
+
+        .return-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .return-btn:hover {
+            background: #15803d;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty-card {
+            background: white;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 10px;
+        }
+
+        .empty-card h2 {
+            color: #172554;
+        }
+
+        .empty-card p {
+            color: #64748b;
+        }
+
+        .browse-btn {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            background: #172554;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 12px 22px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+        .browse-btn:hover {
+            background: #2563eb;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            margin-top: 60px;
+
+            background: #111c35;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 35px;
+        }
+
+        footer h2 {
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            color: #cbd5e1;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 4%;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .nav-links {
+                gap: 8px;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+            }
+
+            .nav-links a:not(.logout) {
+                display: none;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .issue-card {
+                padding: 20px;
+            }
+
+            .book-name {
+                font-size: 21px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        ◈ LIBRIX
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+
+        <a href="{{ url_for('books_page') }}">
+            Books
+        </a>
+
+
+        <a href="{{ url_for('my_books') }}">
+            My Books
+        </a>
+
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+
+    <div class="label">
+        PERSONAL LIBRARY
+    </div>
+
+
+    <h1>
+        My Books
+    </h1>
+
+
+    <p class="subtitle">
+        View your issued and returned books.
+    </p>
+
+
+
+    <!-- ================= FLASH MESSAGES ================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- ================= BOOK LIST ================= -->
+
+    {% if issued_books %}
+
+
+        {% for issue in issued_books %}
+
+            <div class="issue-card">
+
+
+                <h2 class="book-name">
+
+                    📖 {{ issue.book.title }}
+
+                </h2>
+
+
+                <p class="book-info">
+
+                    <strong>Author:</strong>
+
+                    {{ issue.book.author }}
+
+                </p>
+
+
+                <p class="book-info">
+
+                    <strong>ISBN:</strong>
+
+                    {{ issue.book.isbn }}
+
+                </p>
+
+
+                <p class="book-info">
+
+                    <strong>Issue Date:</strong>
+
+                    {{ issue.issue_date.strftime('%d-%m-%Y') }}
+
+                </p>
+
+
+                <p class="book-info">
+
+                    <strong>Due Date:</strong>
+
+                    {{ issue.due_date.strftime('%d-%m-%Y') }}
+
+                </p>
+
+
+
+                <!-- ================= STATUS ================= -->
+
+                {% if issue.status == "Issued" %}
+
+
+                    {% if issue.due_date < current_date %}
+
+                        <p class="status overdue">
+                            🔴 Overdue
+                        </p>
+
+                    {% else %}
+
+                        <p class="status issued">
+                            🔵 Currently Issued
+                        </p>
+
+                    {% endif %}
+
+
+                {% else %}
+
+
+                    <p class="status returned">
+                        🟢 Returned
+                    </p>
+
+
+                    {% if issue.return_date %}
+
+                        <p class="book-info">
+
+                            <strong>
+                                Return Date:
+                            </strong>
+
+                            {{ issue.return_date.strftime('%d-%m-%Y') }}
+
+                        </p>
+
+                    {% endif %}
+
+
+                {% endif %}
+
+
+
+                <!-- ================= ACTIONS ================= -->
+
+                <div class="actions">
+
+
+                    <a
+                        href="{{ url_for('book_details', book_id=issue.book.id) }}"
+                        class="btn view-btn"
+                    >
+                        📖 View Book
+                    </a>
+
+
+                    {% if issue.status == "Issued" %}
+
+                        <form
+                            action="{{ url_for('return_book', issue_id=issue.id) }}"
+                            method="POST"
+                            onsubmit="return confirm('Are you sure you want to return this book?');"
+                        >
+
+                            <button
+                                type="submit"
+                                class="btn return-btn"
+                            >
+                                ↩ Return Book
+                            </button>
+
+                        </form>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+
+        <!-- ================= EMPTY ================= -->
+
+        <div class="empty-card">
+
+            <div class="empty-icon">
+                📚
+            </div>
+
+            <h2>
+                No Books Yet
+            </h2>
+
+            <p>
+                You have not issued any books yet.
+            </p>
+
+
+            <a
+                href="{{ url_for('books_page') }}"
+                class="browse-btn"
+            >
+                Browse Books →
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h2>
+        ◈ LIBRIX
+    </h2>
+
+    <p>
+        Smart library management for a smarter campus.
+    </p>
+
+    <p>
+        © 2026 Librix Digital Library
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

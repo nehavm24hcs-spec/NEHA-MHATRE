@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Book Issues | LIBRIX</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        color: #111827;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .navbar {
+        background: white;
+        padding: 18px 6%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #172554;
+    }
+
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: #172554;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    .nav-links a {
+        color: #172554;
+        font-weight: bold;
+    }
+
+    .nav-links a:hover {
+        color: #2563eb;
+    }
+
+    .logout-btn {
+        background: #172554;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .logout-btn:hover {
+        background: #2563eb;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1250px;
+        margin: 45px auto;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+        font-size: 36px;
+        color: #172554;
+        margin-bottom: 8px;
+    }
+
+    .page-header p {
+        color: #64748b;
+    }
+
+    .flash {
+        padding: 14px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .flash.success {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .flash.error {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .table-card {
+        background: white;
+        border-radius: 18px;
+        padding: 25px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        min-width: 850px;
+        border-collapse: collapse;
+    }
+
+    th {
+        text-align: left;
+        padding: 15px;
+        background: #f8fafc;
+        color: #172554;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 15px;
+        border-bottom: 1px solid #eef2f7;
+        color: #475569;
+    }
+
+    tr:hover {
+        background: #f8fafc;
+    }
+
+    .book-title {
+        color: #172554;
+        font-weight: bold;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .issued {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .returned {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .overdue {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .empty {
+        text-align: center;
+        padding: 50px 20px;
+        color: #64748b;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 25px;
+        background: #172554;
+        color: white;
+        padding: 11px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .back-btn:hover {
+        background: #2563eb;
+    }
+
+    footer {
+        margin-top: 60px;
+        background: #111c35;
+        color: white;
+        padding: 35px;
+        text-align: center;
+    }
+
+    footer p {
+        margin-top: 8px;
+        color: #cbd5e1;
+    }
+
+    @media (max-width: 700px) {
+
+        .nav-links {
+            display: none;
+        }
+
+        .container {
+            width: 92%;
+            margin: 30px auto;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+        }
+
+        .table-card {
+            padding: 15px;
+        }
+    }
+</style>
+
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+
+<div class="logo">
+    <span class="logo-icon">◈</span>
+    <span>LIBRIX</span>
+</div>
+
+<div class="nav-links">
+
+    <a href="{{ url_for('admin_dashboard') }}">
+        Dashboard
+    </a>
+
+    <a href="{{ url_for('books_page') }}">
+        Books
+    </a>
+
+    <a href="{{ url_for('admin_users') }}">
+        Users
+    </a>
+
+    <a href="{{ url_for('admin_issues') }}">
+        Issues
+    </a>
+
+</div>
+
+<a href="{{ url_for('logout') }}" class="logout-btn">
+    Logout
+</a>
+
+
+</nav>
+
+<main class="container">
+
+<div class="page-header">
+
+    <h1>Book Issues</h1>
+
+    <p>
+        Monitor issued, returned and overdue books.
+    </p>
+
+</div>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+
+<div class="table-card">
+
+    {% if issues %}
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>User</th>
+                    <th>Book</th>
+                    <th>Issue Date</th>
+                    <th>Due Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for issue in issues %}
+
+                <tr>
+
+                    <td>
+                        {% if issue.user %}
+                            {{ issue.user.name }}
+                            <br>
+                            <small>{{ issue.user.email }}</small>
+                        {% else %}
+                            Unknown User
+                        {% endif %}
+                    </td>
+
+                    <td class="book-title">
+
+                        {% if issue.book %}
+                            {{ issue.book.title }}
+                        {% else %}
+                            Book Deleted
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+                        {% if issue.issue_date %}
+                            {{ issue.issue_date.strftime('%d %b %Y') }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if issue.due_date %}
+                            {{ issue.due_date.strftime('%d %b %Y') }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        {% if issue.return_date %}
+                            {{ issue.return_date.strftime('%d %b %Y') }}
+                        {% else %}
+                            Not Returned
+                        {% endif %}
+                    </td>
+
+                    <td>
+
+                        {% if issue.status == "Returned" %}
+
+                            <span class="status returned">
+                                ✓ Returned
+                            </span>
+
+                        {% elif issue.is_overdue %}
+
+                            <span class="status overdue">
+                                ⚠ Overdue
+                            </span>
+
+                        {% else %}
+
+                            <span class="status issued">
+                                ● Issued
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>No Book Issues</h2>
+
+            <p>
+                No books have been issued yet.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<a href="{{ url_for('admin_dashboard') }}" class="back-btn">
+    ← Back to Dashboard
+</a>
+
+
+</main>
+
+<footer>
+
+<h2>◈ LIBRIX</h2>
+
+<p>
+    Smart library management for a smarter campus.
+</p>
+
+<p>
+    © 2026 LIBRIX Digital Library
+</p>
+
+
+</footer>
+
+</body>
+</html>

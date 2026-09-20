@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Login | LIBRIX</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="auth-page">
+
+<!-- ================= TOP NAVBAR ================= -->
+
+<nav class="navbar">
+
+
+<div class="logo">
+
+    <span class="logo-icon">
+        ◈
+    </span>
+
+    <span>
+        LIBRIX
+    </span>
+
+</div>
+
+
+<div class="nav-links">
+
+    <a href="{{ url_for('home') }}">
+        Home
+    </a>
+
+    <a href="{{ url_for('login') }}" class="active">
+        Login
+    </a>
+
+    <a href="{{ url_for('register') }}">
+        Register
+    </a>
+
+</div>
+
+
+<div class="nav-actions">
+
+    <a href="{{ url_for('register') }}"
+       class="signup-btn">
+
+        Create Account
+
+    </a>
+
+</div>
+
+
+</nav>
+
+<!-- ================= LOGIN ================= -->
+
+<div class="auth-container">
+
+<!-- LEFT SIDE -->
+
+<div class="auth-info">
+
+    <div class="auth-logo">
+
+        <span>◈</span> LIBRIX
+
+    </div>
+
+
+    <div class="auth-content">
+
+        <span class="auth-label">
+            SMART DIGITAL LIBRARY
+        </span>
+
+
+        <h1>
+            Welcome<br>
+            <span>Back.</span>
+        </h1>
+
+
+        <p>
+            Access your digital library, discover books
+            and manage your reading journey.
+        </p>
+
+    </div>
+
+
+    <div class="auth-footer">
+
+        © 2026 LIBRIX Digital Library
+
+    </div>
+
+</div>
+
+
+<!-- RIGHT SIDE -->
+
+<div class="auth-form-section">
+
+    <div class="auth-form">
+
+
+        <!-- MOBILE LOGO -->
+
+        <div class="mobile-logo">
+            ◈ LIBRIX
+        </div>
+
+
+        <h2>
+            Sign in
+        </h2>
+
+
+        <p class="form-subtitle">
+            Enter your details to continue.
+        </p>
+
+
+        <!-- FLASH MESSAGES -->
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <!-- LOGIN FORM -->
+
+        <form method="POST"
+              action="{{ url_for('login') }}{% if next %}?next={{ next }}{% endif %}">
+
+
+            <!-- QR / NEXT PAGE -->
+
+            {% if next %}
+
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ next }}"
+                >
+
+            {% endif %}
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label>
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+                <label>
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            <div class="form-options">
+
+                <label class="remember">
+
+                    <input
+                        type="checkbox"
+                        name="remember"
+                    >
+
+                    Remember me
+
+                </label>
+
+
+                <!-- FORGOT PASSWORD -->
+
+                <a href="{{ url_for('forgot_password') }}">
+                    Forgot password?
+                </a>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="auth-button">
+
+                Sign In →
+
+            </button>
+
+        </form>
+
+
+        <!-- DIVIDER -->
+
+        <div class="divider">
+
+            <span>
+                OR
+            </span>
+
+        </div>
+
+
+        <!-- REGISTER -->
+
+        <p class="register-text">
+
+            Don't have an account?
+
+            <a href="{{ url_for('register') }}">
+                Create account
+            </a>
+
+        </p>
+
+
+    </div>
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>

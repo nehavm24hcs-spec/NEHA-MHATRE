@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+   content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | LIBRIX</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+
+<style>
+
+/* =====================================================
+   CLICKABLE STAT CARDS
+===================================================== */
+
+.dashboard-stat-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   RECENT ACTIVITY
+===================================================== */
+
+.activity-card {
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.activity-item {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) 110px;
+    gap: 18px;
+    align-items: start;
+    padding: 20px;
+
+    background: #fafafa;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+
+    transition: 0.25s ease;
+}
+
+.activity-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+    border-color: #dddddd;
+}
+
+
+/* =====================================================
+   ACTIVITY ICON
+===================================================== */
+
+.activity-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+    background: #f0f3ff;
+
+    font-size: 25px;
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   BOOK INFORMATION
+===================================================== */
+
+.activity-details {
+    min-width: 0;
+}
+
+.activity-book-title {
+    margin: 0 0 5px;
+
+    color: #202124;
+    font-size: 18px;
+    font-weight: 700;
+
+    word-break: break-word;
+}
+
+.activity-author {
+    margin: 0 0 15px;
+
+    color: #777;
+    font-size: 13px;
+}
+
+
+/* =====================================================
+   DATE INFORMATION
+===================================================== */
+
+.activity-info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(120px, 1fr));
+
+    gap: 12px;
+}
+
+.activity-info {
+    padding: 11px 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 10px;
+}
+
+.activity-info-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #999;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+.activity-info-value {
+    display: block;
+
+    color: #333;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   EXTRA BOOK INFORMATION
+===================================================== */
+
+.activity-meta {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.activity-tag {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 10px;
+
+    border-radius: 8px;
+
+    background: #f2f2f2;
+
+    color: #666;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   DAYS INFORMATION
+===================================================== */
+
+.days-left {
+    margin-top: 12px;
+
+    color: #777;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.days-overdue {
+    color: #d93025;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.activity-status {
+    min-width: 100px;
+
+    text-align: right;
+}
+
+.status-issued,
+.status-returned,
+.status-overdue {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.status-issued {
+    background: #e9f8ef;
+    color: #218838;
+}
+
+.status-returned {
+    background: #eaf2ff;
+    color: #2864c7;
+}
+
+.status-overdue {
+    background: #fff0f0;
+    color: #d93025;
+}
+
+
+/* =====================================================
+   EMPTY ACTIVITY
+===================================================== */
+
+.empty-activity {
+    text-align: center;
+
+    padding: 45px 20px;
+}
+
+.empty-activity .activity-icon {
+    margin: 0 auto 15px;
+}
+
+.empty-activity h3 {
+    margin-bottom: 7px;
+
+    color: #333;
+}
+
+.empty-activity p {
+    color: #888;
+
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .activity-item {
+        grid-template-columns:
+            55px minmax(0, 1fr);
+    }
+
+    .activity-status {
+        grid-column: 2;
+
+        text-align: left;
+    }
+
+    .activity-info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .activity-item {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .activity-status {
+        grid-column: auto;
+
+        text-align: left;
+    }
+
+    .activity-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .activity-icon {
+        width: 50px;
+
+        height: 50px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body class="dashboard-page">
+
+<div class="dashboard-container">
+
+<!-- =====================================================
+     SIDEBAR
+====================================================== -->
+
+<aside class="sidebar">
+
+<div class="sidebar-logo">
+
+    <span>◈</span> LIBRIX
+
+</div>
+
+
+<div class="menu-title">
+
+    MAIN MENU
+
+</div>
+
+
+<nav class="sidebar-menu">
+
+
+    <a href="{{ url_for('dashboard') }}"
+       class="menu-link active">
+
+        <span>⌂</span>
+
+        Dashboard
+
+    </a>
+
+
+    <a href="{{ url_for('books_page') }}"
+       class="menu-link">
+
+        <span>▣</span>
+
+        Browse Books
+
+    </a>
+
+
+    <a href="{{ url_for('my_books') }}"
+       class="menu-link">
+
+        <span>▤</span>
+
+        My Books
+
+    </a>
+
+
+    <a href="{{ url_for('dashboard') }}#qr"
+       class="menu-link">
+
+        <span>▧</span>
+
+        QR Scanner
+
+    </a>
+
+
+</nav>
+
+
+<div class="menu-title account-title">
+
+    ACCOUNT
+
+</div>
+
+
+<nav class="sidebar-menu">
+
+
+    <a href="{{ url_for('dashboard') }}#profile"
+       class="menu-link">
+
+        <span>◯</span>
+
+        Profile
+
+    </a>
+
+
+    <a href="{{ url_for('logout') }}"
+       class="menu-link logout-link">
+
+        <span>↪</span>
+
+        Logout
+
+    </a>
+
+
+</nav>
+
+
+<div class="sidebar-footer">
+
+    <strong>LIBRIX</strong>
+
+    <p>
+        Smart Digital Library
+    </p>
+
+</div>
+
+</aside>
+
+<!-- =====================================================
+     MAIN CONTENT
+====================================================== -->
+
+<main class="dashboard-main">
+
+<!-- =================================================
+     HEADER
+================================================== -->
+
+<header class="dashboard-header">
+
+
+    <div>
+
+        <span class="dashboard-label">
+
+            DIGITAL LIBRARY
+
+        </span>
+
+
+        <h1>
+
+            Dashboard
+
+        </h1>
+
+    </div>
+
+
+    <div class="user-box">
+
+
+        <div class="user-avatar">
+
+            {{ user.name[0]|upper }}
+
+        </div>
+
+
+        <div>
+
+            <strong>
+
+                {{ user.name }}
+
+            </strong>
+
+
+            <small>
+
+                Student
+
+            </small>
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =================================================
+     WELCOME
+================================================== -->
+
+<section class="welcome-card">
+
+
+    <div>
+
+
+        <span class="welcome-label">
+
+            WELCOME BACK 👋
+
+        </span>
+
+
+        <h2>
+
+            Hello, {{ user.name }}!
+
+        </h2>
+
+
+        <p>
+
+            Explore books, manage your borrowed books
+            and enjoy your digital library with LIBRIX.
+
+        </p>
+
+
+    </div>
+
+
+    <div class="welcome-icon">
+
+        ◈
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =================================================
+     STATISTICS
+================================================== -->
+
+<section class="dashboard-stats">
+
+
+    <!-- =================================================
+         TOTAL BOOKS
+    ================================================== -->
+
+    <a href="{{ url_for('books_page') }}"
+       class="dashboard-stat-card">
+
+
+        <div class="stat-icon">
+
+            📚
+
+        </div>
+
+
+        <div>
+
+            <span>
+
+                Total Books
+
+            </span>
+
+
+            <strong>
+
+                {{ total_books }}
+
+            </strong>
+
+        </div>
+
+
+    </a>
+
+
+
+    <!-- =================================================
+         AVAILABLE BOOKS
+    ================================================== -->
+
+    <a href="{{ url_for('books_page', availability='available') }}"
+       class="dashboard-stat-card">
+
+
+        <div class="stat-icon">
+
+            ✓
+
+        </div>
+
+
+        <div>
+
+            <span>
+
+                Available Books
+
+            </span>
+
+
+            <strong>
+
+                {{ available_books }}
+
+            </strong>
+
+        </div>
+
+
+    </a>
+
+
+
+    <!-- =================================================
+         MY BORROWED BOOKS
+    ================================================== -->
+
+    <a href="{{ url_for('my_books') }}"
+       class="dashboard-stat-card">
+
+
+        <div class="stat-icon">
+
+            📖
+
+        </div>
+
+
+        <div>
+
+            <span>
+
+                My Borrowed Books
+
+            </span>
+
+
+            <strong>
+
+                {{ borrowed_books }}
+
+            </strong>
+
+        </div>
+
+
+    </a>
+
+
+</section>
+
+
+
+<!-- =================================================
+     QUICK ACCESS
+================================================== -->
+
+<section class="quick-section">
+
+
+    <div class="section-heading-dashboard">
+
+
+        <div>
+
+            <span>
+
+                QUICK ACCESS
+
+            </span>
+
+
+            <h2>
+
+                Library Services
+
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="service-grid">
+
+
+        <!-- BROWSE BOOKS -->
+
+        <div class="service-card">
+
+
+            <div class="service-icon">
+
+                📚
+
+            </div>
+
+
+            <h3>
+
+                Browse Books
+
+            </h3>
+
+
+            <p>
+
+                Search and explore available books.
+
+            </p>
+
+
+            <a href="{{ url_for('books_page') }}">
+
+                Explore →
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- QR SCANNER -->
+
+        <div class="service-card">
+
+
+            <div class="service-icon">
+
+                📱
+
+            </div>
+
+
+            <h3>
+
+                Scan QR Code
+
+            </h3>
+
+
+            <p>
+
+                Scan a book QR code for quick access.
+
+            </p>
+
+
+            <a href="{{ url_for('dashboard') }}#qr">
+
+                Scan →
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- MY BOOKS -->
+
+        <div class="service-card">
+
+
+            <div class="service-icon">
+
+                📖
+
+            </div>
+
+
+            <h3>
+
+                My Books
+
+            </h3>
+
+
+            <p>
+
+                View your issued and borrowed books.
+
+            </p>
+
+
+            <a href="{{ url_for('my_books') }}">
+
+                View →
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =================================================
+     RECENT ACTIVITY
+```
+
+================================================== -->
+
+<section class="activity-section">
+
+
+    <div class="section-heading-dashboard">
+
+
+        <div>
+
+            <span>
+
+                ACTIVITY
+
+            </span>
+
+
+            <h2>
+
+                Recent Activity
+
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="activity-card">
+
+
+        {% if recent_activities %}
+
+
+            <div class="activity-list">
+
+
+                {% for activity in recent_activities %}
+
+
+                    <div class="activity-item">
+
+
+                        <!-- =================================================
+                             ACTIVITY ICON
+                        ================================================== -->
+
+                        <div class="activity-icon">
+
+
+                            {% if activity.activity_type == "Returned" %}
+
+                                ↩️
+
+                            {% elif activity.is_overdue %}
+
+                                ⚠️
+
+                            {% else %}
+
+                                📖
+
+                            {% endif %}
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             BOOK DETAILS
+                        ================================================== -->
+
+                        <div class="activity-details">
+
+
+                            {% if activity.activity_book %}
+
+
+                                <!-- BOOK TITLE -->
+
+                                <h3 class="activity-book-title">
+
+                                    {{ activity.activity_book.title }}
+
+                                </h3>
+
+
+                                <!-- AUTHOR -->
+
+                                <p class="activity-author">
+
+                                    ✍️
+                                    {{ activity.activity_book.author }}
+
+                                </p>
+
+
+
+                                <!-- =================================================
+                                     DATES
+                                ================================================== -->
+
+                                <div class="activity-info-grid">
+
+
+                                    <!-- CHECK-OUT -->
+
+                                    <div class="activity-info">
+
+                                        <span class="activity-info-label">
+
+                                            Check-out
+
+                                        </span>
+
+
+                                        <span class="activity-info-value">
+
+
+                                            {% if activity.issue_date %}
+
+                                                {{ activity.issue_date.strftime('%d %b %Y') }}
+
+                                            {% else %}
+
+                                                —
+
+                                            {% endif %}
+
+
+                                        </span>
+
+                                    </div>
+
+
+
+                                    <!-- EXPECTED RETURN -->
+
+                                    <div class="activity-info">
+
+                                        <span class="activity-info-label">
+
+                                            Expected Return
+
+                                        </span>
+
+
+                                        <span class="activity-info-value">
+
+
+                                            {% if activity.due_date %}
+
+                                                {{ activity.due_date.strftime('%d %b %Y') }}
+
+                                            {% else %}
+
+                                                —
+
+                                            {% endif %}
+
+
+                                        </span>
+
+                                    </div>
+
+
+
+                                    <!-- ACTUAL RETURN -->
+
+                                    <div class="activity-info">
+
+                                        <span class="activity-info-label">
+
+                                            Actual Return
+
+                                        </span>
+
+
+                                        <span class="activity-info-value">
+
+
+                                            {% if activity.return_date %}
+
+                                                {{ activity.return_date.strftime('%d %b %Y') }}
+
+                                            {% else %}
+
+                                                Not Returned
+
+                                            {% endif %}
+
+
+                                        </span>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <!-- =================================================
+                                     BOOK EXTRA DETAILS
+                                ================================================== -->
+
+                                <div class="activity-meta">
+
+
+                                    {% if activity.activity_book.category %}
+
+
+                                        <span class="activity-tag">
+
+                                            🏷️
+                                            {{ activity.activity_book.category }}
+
+                                        </span>
+
+
+                                    {% endif %}
+
+
+                                    {% if activity.activity_book.shelf %}
+
+
+                                        <span class="activity-tag">
+
+                                            📚
+                                            Shelf
+                                            {{ activity.activity_book.shelf }}
+
+                                        </span>
+
+
+                                    {% endif %}
+
+
+                                    {% if activity.activity_book.isbn %}
+
+
+                                        <span class="activity-tag">
+
+                                            ISBN:
+                                            {{ activity.activity_book.isbn }}
+
+                                        </span>
+
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+
+                                <!-- =================================================
+                                     DAYS LEFT / OVERDUE
+                                ================================================== -->
+
+                                {% if activity.activity_type == "Issued" %}
+
+
+                                    {% if activity.is_overdue %}
+
+
+                                        <div class="days-left days-overdue">
+
+                                            ⚠️
+
+                                            Overdue by
+
+                                            {{ activity.days_left }}
+
+                                            day{% if activity.days_left != 1 %}s{% endif %}
+
+                                        </div>
+
+
+                                    {% elif activity.days_left == 0 %}
+
+
+                                        <div class="days-left days-overdue">
+
+                                            ⚠️
+
+                                            Due today
+
+                                        </div>
+
+
+                                    {% elif activity.days_left == 1 %}
+
+
+                                        <div class="days-left">
+
+                                            ⏳
+
+                                            1 day remaining
+
+                                        </div>
+
+
+                                    {% else %}
+
+
+                                        <div class="days-left">
+
+                                            ⏳
+
+                                            {{ activity.days_left }}
+
+                                            days remaining
+
+                                        </div>
+
+
+                                    {% endif %}
+
+
+                                {% else %}
+
+
+                                    <div class="days-left">
+
+                                        ✓
+
+                                        Book returned successfully
+
+                                    </div>
+
+
+                                {% endif %}
+
+
+                            {% else %}
+
+
+                                <h3 class="activity-book-title">
+
+                                    Book Information Unavailable
+
+                                </h3>
+
+
+                                <p class="activity-author">
+
+                                    This book is no longer available
+                                    in the library.
+
+                                </p>
+
+
+                            {% endif %}
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             STATUS
+                        ================================================== -->
+
+                        <div class="activity-status">
+
+
+                            {% if activity.activity_type == "Returned" %}
+
+
+                                <span class="status-returned">
+
+                                    ✓ Returned
+
+                                </span>
+
+
+                            {% elif activity.is_overdue %}
+
+
+                                <span class="status-overdue">
+
+                                    ⚠ Overdue
+
+                                </span>
+
+
+                            {% else %}
+
+
+                                <span class="status-issued">
+
+                                    ● Issued
+
+                                </span>
+
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =================================================
+                 EMPTY ACTIVITY
+            ================================================== -->
+
+            <div class="empty-activity">
+
+
+                <div class="activity-icon">
+
+                    📚
+
+                </div>
+
+
+                <h3>
+
+                    No recent activity
+
+                </h3>
+
+
+                <p>
+
+                    Your book issue and return activities
+                    will appear here.
+
+                </p>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</section>
+
+</main>
+
+</div>
+
+</body>
+
+</html>

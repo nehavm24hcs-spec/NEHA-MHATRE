@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Book | LIBRIX</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #111827;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar {
+    background: white;
+    padding: 16px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 27px;
+    font-weight: bold;
+    color: #172554;
+}
+
+.logo-icon {
+    width: 43px;
+    height: 43px;
+    background: #172554;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #172554;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #2563eb;
+}
+
+.nav-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-btn {
+    text-decoration: none;
+    padding: 10px 17px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.dashboard-btn {
+    color: #172554;
+}
+
+.logout-btn {
+    background: #172554;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #2563eb;
+}
+
+/* ================= MAIN ================= */
+
+.page-container {
+    width: 92%;
+    max-width: 1050px;
+    margin: 28px auto 50px;
+}
+
+/* ================= HEADER ================= */
+
+.page-header {
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.page-label {
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.page-title {
+    font-size: 36px;
+    color: #172554;
+    margin-bottom: 6px;
+}
+
+.page-description {
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* ================= FLASH ================= */
+
+.flash {
+    padding: 12px 16px;
+    border-radius: 9px;
+    margin-bottom: 18px;
+    font-weight: bold;
+}
+
+.flash.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.flash.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* ================= FORM CARD ================= */
+
+.form-card {
+    background: white;
+    border-radius: 18px;
+    padding: 28px 32px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* ================= FORM HEADER ================= */
+
+.form-header {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-header h2 {
+    color: #172554;
+    font-size: 21px;
+    margin-bottom: 5px;
+}
+
+.form-header p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* ================= FORM GRID ================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 22px;
+}
+
+/* ================= FORM GROUP ================= */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #172554;
+    margin-bottom: 7px;
+}
+
+.required {
+    color: #dc2626;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    font-size: 15px;
+    color: #111827;
+    background: white;
+    outline: none;
+    font-family: Arial, sans-serif;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.help-text {
+    margin-top: 5px;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+/* ================= FORM ACTIONS ================= */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cancel-btn,
+.submit-btn {
+    padding: 12px 22px;
+    border-radius: 9px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+}
+
+.cancel-btn {
+    background: #e2e8f0;
+    color: #172554;
+}
+
+.cancel-btn:hover {
+    background: #cbd5e1;
+}
+
+.submit-btn {
+    background: #172554;
+    color: white;
+}
+
+.submit-btn:hover {
+    background: #2563eb;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    background: #111c35;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+footer h2 {
+    margin-bottom: 8px;
+}
+
+footer p {
+    margin-top: 6px;
+    color: #cbd5e1;
+}
+
+/* ================= TABLET ================= */
+
+@media (max-width: 800px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .form-card {
+        padding: 24px;
+    }
+
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 14px 20px;
+    }
+
+    .dashboard-btn {
+        display: none;
+    }
+
+    .page-container {
+        width: 94%;
+        margin: 22px auto 40px;
+    }
+
+    .page-title {
+        font-size: 29px;
+    }
+
+    .page-description {
+        font-size: 14px;
+    }
+
+    .form-card {
+        padding: 20px 17px;
+        border-radius: 14px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .submit-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+
+<div class="logo">
+
+    <span class="logo-icon">
+        ◈
+    </span>
+
+    <span>
+        LIBRIX
+    </span>
+
+</div>
+
+<div class="nav-links">
+
+    <a href="{{ url_for('admin_dashboard') }}">
+        Dashboard
+    </a>
+
+    <a href="{{ url_for('books_page') }}">
+        Books
+    </a>
+
+</div>
+
+<div class="nav-actions">
+
+    <a
+        href="{{ url_for('admin_dashboard') }}"
+        class="nav-btn dashboard-btn"
+    >
+        Admin Dashboard
+    </a>
+
+    <a
+        href="{{ url_for('logout') }}"
+        class="nav-btn logout-btn"
+    >
+        Logout
+    </a>
+
+</div>
+
+
+</nav>
+
+<!-- ================= MAIN ================= -->
+
+<main class="page-container">
+
+
+<!-- HEADER -->
+
+<div class="page-header">
+
+    <div class="page-label">
+        LIBRARY MANAGEMENT
+    </div>
+
+    <h1 class="page-title">
+        Add New Book
+    </h1>
+
+    <p class="page-description">
+        Add a new book to the LIBRIX digital library.
+    </p>
+
+</div>
+
+
+<!-- FLASH -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="flash {{ category }}">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+
+<!-- FORM -->
+
+<div class="form-card">
+
+    <div class="form-header">
+
+        <h2>
+            📚 Book Details
+        </h2>
+
+        <p>
+            Enter the information below to add the book.
+        </p>
+
+    </div>
+
+
+    <form
+        method="POST"
+        action="{{ url_for('add_book') }}"
+    >
+
+        <div class="form-grid">
+
+
+            <!-- TITLE -->
+
+            <div class="form-group">
+
+                <label for="title">
+                    Book Title <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter book title"
+                    required
+                    autofocus
+                >
+
+            </div>
+
+
+            <!-- AUTHOR -->
+
+            <div class="form-group">
+
+                <label for="author">
+                    Author <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    placeholder="Enter author name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- ISBN -->
+
+            <div class="form-group">
+
+                <label for="isbn">
+                    ISBN
+                </label>
+
+                <input
+                    type="text"
+                    id="isbn"
+                    name="isbn"
+                    placeholder="Example: 9780132350884"
+                >
+
+                <span class="help-text">
+                    ISBN helps display the book cover and generate QR information.
+                </span>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="form-group">
+
+                <label for="category">
+                    Category <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="category"
+                    name="category"
+                    placeholder="Example: Computer Science"
+                    required
+                >
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div class="form-group">
+
+                <label for="quantity">
+                    Quantity <span class="required">*</span>
+                </label>
+
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    min="1"
+                    value="1"
+                    required
+                >
+
+                <span class="help-text">
+                    Number of copies available in the library.
+                </span>
+
+            </div>
+
+
+            <!-- SHELF -->
+
+            <div class="form-group">
+
+                <label for="shelf">
+                    Shelf
+                </label>
+
+                <input
+                    type="text"
+                    id="shelf"
+                    name="shelf"
+                    placeholder="Example: A-12"
+                >
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            {% if false %}
+
+            <div class="form-group full">
+
+                <label for="description">
+                    Description
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Enter book description..."
+                ></textarea>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="form-actions">
+
+            <a
+                href="{{ url_for('books_page') }}"
+                class="cancel-btn"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="submit-btn"
+            >
+                ➕ Add Book
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+
+<h2>
+    ◈ LIBRIX
+</h2>
+
+<p>
+    Smart library management for a smarter campus.
+</p>
+
+<p>
+    © 2026 Librix Digital Library
+</p>
+
+
+</footer>
+
+</body>
+
+</html>

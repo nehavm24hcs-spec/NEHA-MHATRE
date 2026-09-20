@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Users | LIBRIX</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: white;
+            padding: 18px 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 28px;
+            font-weight: bold;
+
+            color: #172554;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+
+            background: #172554;
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #172554;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .logout-btn {
+            background: #172554;
+            color: white;
+
+            padding: 10px 18px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: #2563eb;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+
+            margin: 45px auto;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            color: #172554;
+
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #64748b;
+        }
+
+        /* BACK */
+
+        .back-btn {
+            display: inline-block;
+
+            margin-bottom: 25px;
+
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        /* TABLE */
+
+        .users-section {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+                0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .table-wrapper {
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+        .user-table {
+            width: 100%;
+
+            min-width: 700px;
+
+            border-collapse: collapse;
+        }
+
+        .user-table th {
+            text-align: left;
+
+            padding: 15px;
+
+            background: #f8fafc;
+
+            color: #172554;
+
+            font-size: 14px;
+        }
+
+        .user-table td {
+            padding: 15px;
+
+            border-bottom:
+                1px solid #eef2f7;
+
+            color: #475569;
+        }
+
+        .user-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .user-name {
+            color: #172554;
+            font-weight: bold;
+        }
+
+        /* ROLE */
+
+        .role {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        .role-admin {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .role-student {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+
+            padding: 50px 20px;
+
+            color: #64748b;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 60px;
+
+            background: #111c35;
+
+            color: white;
+
+            padding: 35px;
+
+            text-align: center;
+        }
+
+        footer h2 {
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            margin: 6px;
+
+            color: #cbd5e1;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                width: 92%;
+
+                margin: 30px auto;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .users-section {
+                padding: 18px;
+            }
+
+            .logout-btn {
+                padding: 9px 13px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">
+            ◈
+        </span>
+
+        <span>
+            LIBRIX
+        </span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('books_page') }}">
+            Books
+        </a>
+
+        <a href="{{ url_for('add_book') }}">
+            Add Book
+        </a>
+
+        <a href="{{ url_for('admin_users') }}">
+            Users
+        </a>
+
+        <a href="{{ url_for('admin_issues') }}">
+            Issues
+        </a>
+
+    </div>
+
+
+    <a href="{{ url_for('logout') }}"
+       class="logout-btn">
+
+        Logout
+
+    </a>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+
+    <a href="{{ url_for('admin_dashboard') }}"
+       class="back-btn">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+    <div class="page-header">
+
+        <h1>
+            Manage Users
+        </h1>
+
+        <p>
+            View all registered LIBRIX users.
+        </p>
+
+    </div>
+
+
+    <div class="users-section">
+
+
+        {% if users %}
+
+
+            <div class="table-wrapper">
+
+
+                <table class="user-table">
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Role
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for user in users %}
+
+
+                            <tr>
+
+
+                                <td>
+                                    {{ user.id }}
+                                </td>
+
+
+                                <td class="user-name">
+
+                                    {{ user.name }}
+
+                                </td>
+
+
+                                <td>
+
+                                    {{ user.email }}
+
+                                </td>
+
+
+                                <td>
+
+
+                                    {% if user.role == "admin" %}
+
+                                        <span class="role role-admin">
+                                            Admin
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="role role-student">
+                                            Student
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty">
+
+                <h3>
+                    No users found
+                </h3>
+
+                <p>
+                    Registered users will appear here.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h2>
+        ◈ LIBRIX
+    </h2>
+
+    <p>
+        Smart library management for a smarter campus.
+    </p>
+
+    <p>
+        © 2026 LIBRIX Digital Library
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

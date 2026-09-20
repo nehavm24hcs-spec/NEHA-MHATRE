@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LIBRIX | Digital Library</title>
+
+    <!-- HOME PAGE CSS ONLY -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/home.css') }}">
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">
+            ◈
+        </span>
+
+        <span>
+            LIBRIX
+        </span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}"
+           class="active">
+            Home
+        </a>
+
+        <a href="{{ url_for('login') }}">
+            Login
+        </a>
+
+        <a href="{{ url_for('register') }}">
+            Register
+        </a>
+
+    </div>
+
+
+    <div class="nav-actions">
+
+        <a href="{{ url_for('login') }}"
+           class="login-btn">
+            Login
+        </a>
+
+        <a href="{{ url_for('register') }}"
+           class="signup-btn">
+            Get Started
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="hero-label">
+            SMART DIGITAL LIBRARY
+        </span>
+
+        <h1>
+            Your Books.<br>
+            Your <span>Library.</span>
+        </h1>
+
+        <p>
+            Discover books, borrow your favourites,
+            and manage your reading journey with LIBRIX.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="{{ url_for('login') }}"
+               class="primary-btn">
+                Get Started →
+            </a>
+
+            <a href="{{ url_for('register') }}"
+               class="secondary-btn">
+                Create Account
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BOOK VISUAL ================= -->
+
+    <div class="hero-visual">
+
+        <div class="glow"></div>
+
+
+        <!-- LEFT BOOK -->
+
+        <div class="book-card card-one">
+
+            <div class="book-cover">
+                📖
+            </div>
+
+            <div class="book-info">
+
+                <strong>
+                    Classic Reads
+                </strong>
+
+                <small>
+                    Explore Books
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAIN BOOK -->
+
+        <div class="book-card main-book">
+
+            <div class="book-cover main-cover">
+                LIBRIX
+            </div>
+
+            <div class="book-info">
+
+                <strong>
+                    Digital Library
+                </strong>
+
+                <small>
+                    Your Books. Your Library.
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT BOOK -->
+
+        <div class="book-card card-two">
+
+            <div class="book-cover cover-two">
+                📚
+            </div>
+
+            <div class="book-info">
+
+                <strong>
+                    New Collection
+                </strong>
+
+                <small>
+                    Read • Learn • Grow
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <strong>
+            960+
+        </strong>
+
+        <span>
+            Books Available
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <strong>
+            500+
+        </strong>
+
+        <span>
+            Students
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <strong>
+            24/7
+        </strong>
+
+        <span>
+            Digital Access
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <strong>
+            100%
+        </strong>
+
+        <span>
+            Easy Management
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORIES ================= -->
+
+<section class="categories">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span>
+                LIBRARY COLLECTION
+            </span>
+
+            <h2>
+                Explore Categories
+            </h2>
+
+        </div>
+
+
+        <a href="{{ url_for('login') }}">
+            Browse Books →
+        </a>
+
+    </div>
+
+
+    <div class="category-grid">
+
+
+        <div class="category-card">
+
+            <div class="category-icon">
+                📚
+            </div>
+
+            <h3>
+                Fiction
+            </h3>
+
+            <p>
+                Stories, novels and imaginative worlds.
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="category-icon">
+                💻
+            </div>
+
+            <h3>
+                Technology
+            </h3>
+
+            <p>
+                Programming, computers and technology.
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="category-icon">
+                🔬
+            </div>
+
+            <h3>
+                Science
+            </h3>
+
+            <p>
+                Discover science and new ideas.
+            </p>
+
+        </div>
+
+
+        <div class="category-card">
+
+            <div class="category-icon">
+                🎓
+            </div>
+
+            <h3>
+                Education
+            </h3>
+
+            <p>
+                Academic books for learning and study.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="how-section">
+
+    <div class="section-title">
+
+        <span>
+            HOW IT WORKS
+        </span>
+
+        <h2>
+            Simple Library Experience
+        </h2>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <h3>
+                Create Account
+            </h3>
+
+            <p>
+                Register your account and
+                access the LIBRIX digital library.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <h3>
+                Browse & Borrow
+            </h3>
+
+            <p>
+                Find your favourite book and
+                easily issue it from the library.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <h3>
+                Track Your Books
+            </h3>
+
+            <p>
+                Check your issued books,
+                due dates and return status.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        ◈ LIBRIX
+    </div>
+
+    <p>
+        Smart library management for a smarter campus.
+    </p>
+
+    <span>
+        © 2026 LIBRIX Digital Library
+    </span>
+
+</footer>
+
+
+</body>
+
+</html>

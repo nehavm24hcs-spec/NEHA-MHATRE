@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>{{ book.title }} | LIBRIX</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        color: #111827;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar {
+        background: white;
+        padding: 18px 6%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #172554;
+    }
+
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        background: #172554;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 25px;
+    }
+
+    .nav-links a {
+        color: #172554;
+        font-weight: bold;
+    }
+
+    .nav-links a:hover {
+        color: #2563eb;
+    }
+
+    .nav-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .nav-btn {
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .dashboard-btn {
+        color: #172554;
+    }
+
+    .logout-btn {
+        background: #172554;
+        color: white;
+    }
+
+    .logout-btn:hover {
+        background: #2563eb;
+    }
+
+    /* ================= PAGE ================= */
+
+    .page-container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 45px auto;
+    }
+
+    .back-btn {
+        display: inline-block;
+        color: #2563eb;
+        font-weight: bold;
+        margin-bottom: 25px;
+    }
+
+    .back-btn:hover {
+        color: #172554;
+    }
+
+    /* ================= FLASH ================= */
+
+    .flash {
+        padding: 14px 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .flash.success {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .flash.error {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    /* ================= BOOK DETAILS ================= */
+
+    .book-details {
+        background: white;
+        border-radius: 20px;
+        padding: 35px;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 45px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ================= BOOK COVER ================= */
+
+    .book-cover {
+        width: 300px;
+        height: 400px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, #e0e7ff, #dbeafe);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .book-cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+
+    .cover-fallback {
+        width: 100%;
+        height: 100%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 100px;
+    }
+
+    /* ================= BOOK INFORMATION ================= */
+
+    .book-info {
+        min-width: 0;
+    }
+
+    .book-info h1 {
+        font-size: 38px;
+        line-height: 1.25;
+        color: #172554;
+        margin-bottom: 12px;
+        word-break: break-word;
+    }
+
+    .author {
+        font-size: 18px;
+        color: #475569;
+        margin-bottom: 28px;
+    }
+
+    .author strong {
+        color: #172554;
+    }
+
+    .info-box {
+        background: #f8fafc;
+        padding: 15px 18px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+        color: #475569;
+        border: 1px solid #eef2f7;
+        line-height: 1.5;
+    }
+
+    .info-box strong {
+        color: #172554;
+    }
+
+    /* ================= AVAILABILITY ================= */
+
+    .available {
+        color: #16a34a;
+        font-weight: bold;
+    }
+
+    .unavailable {
+        color: #dc2626;
+        font-weight: bold;
+    }
+
+    /* ================= QR CODE ================= */
+
+    .qr-section {
+        margin-top: 25px;
+        padding: 20px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        text-align: center;
+    }
+
+    .qr-section h3 {
+        color: #172554;
+        margin-bottom: 8px;
+        font-size: 18px;
+    }
+
+    .qr-section p {
+        color: #64748b;
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .qr-code {
+        width: 180px;
+        height: 180px;
+        object-fit: contain;
+        background: white;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+    }
+
+    .qr-note {
+        margin-top: 10px;
+        color: #64748b;
+        font-size: 12px;
+    }
+
+    /* ================= ISSUE BUTTON ================= */
+
+    .issue-form {
+        margin-top: 28px;
+    }
+
+    .issue-btn {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        background: #172554;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .issue-btn:hover {
+        background: #2563eb;
+        transform: translateY(-1px);
+    }
+
+    /* ================= DELETE ================= */
+
+    .delete-section {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .delete-btn {
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 10px;
+        background: #dc2626;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .delete-btn:hover {
+        background: #b91c1c;
+        transform: translateY(-1px);
+    }
+
+    /* ================= ISSUE STATUS ================= */
+
+    .already-issued {
+        background: #fef3c7;
+        color: #92400e;
+        padding: 18px;
+        border-radius: 10px;
+        font-weight: bold;
+        margin-top: 28px;
+        line-height: 1.5;
+        border: 1px solid #fde68a;
+    }
+
+    .not-available {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 18px;
+        border-radius: 10px;
+        font-weight: bold;
+        margin-top: 28px;
+        border: 1px solid #fecaca;
+        line-height: 1.5;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+        margin-top: 60px;
+        background: #111c35;
+        color: white;
+        padding: 35px;
+        text-align: center;
+    }
+
+    footer h2 {
+        margin-bottom: 10px;
+    }
+
+    footer p {
+        margin: 6px;
+        color: #cbd5e1;
+    }
+
+    /* ================= TABLET ================= */
+
+    @media (max-width: 850px) {
+
+        .book-details {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .book-cover {
+            width: 100%;
+            max-width: 300px;
+            height: 380px;
+            margin: 0 auto;
+        }
+
+        .book-info h1 {
+            font-size: 32px;
+        }
+
+        .nav-links {
+            display: none;
+        }
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 600px) {
+
+        .navbar {
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 23px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .dashboard-btn {
+            display: none;
+        }
+
+        .page-container {
+            width: 92%;
+            margin: 30px auto;
+        }
+
+        .book-details {
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        .book-cover {
+            height: 330px;
+        }
+
+        .book-info h1 {
+            font-size: 27px;
+        }
+
+        .author {
+            font-size: 16px;
+        }
+
+        .issue-btn,
+        .delete-btn {
+            font-size: 15px;
+        }
+
+        .qr-code {
+            width: 160px;
+            height: 160px;
+        }
+    }
+
+    /* ================= SMALL SCREEN ================= */
+
+    @media (max-width: 400px) {
+
+        .nav-actions {
+            gap: 5px;
+        }
+
+        .logout-btn {
+            padding: 9px 12px;
+        }
+
+        .book-details {
+            padding: 18px;
+        }
+
+        .book-cover {
+            height: 280px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span>LIBRIX</span>
+    </div>
+
+    <div class="nav-links">
+
+        {% if session.get("role") == "admin" %}
+
+            <a href="{{ url_for('admin_dashboard') }}">
+                Dashboard
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ url_for('my_books') }}">
+                My Books
+            </a>
+
+        {% endif %}
+
+        <a href="{{ url_for('books_page') }}">
+            Books
+        </a>
+
+    </div>
+
+    <div class="nav-actions">
+
+        {% if session.get("role") == "admin" %}
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="nav-btn dashboard-btn"
+            >
+                Admin Dashboard
+            </a>
+
+        {% else %}
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="nav-btn dashboard-btn"
+            >
+                Dashboard
+            </a>
+
+        {% endif %}
+
+        <a
+            href="{{ url_for('logout') }}"
+            class="nav-btn logout-btn"
+        >
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page-container">
+
+    <a
+        href="{{ url_for('books_page') }}"
+        class="back-btn"
+    >
+        ← Back to Books
+    </a>
+
+
+    <!-- FLASH MESSAGE -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- ================= BOOK DETAILS ================= -->
+
+    <div class="book-details">
+
+
+        <!-- BOOK COVER -->
+
+        <div class="book-cover">
+
+            {% if book.isbn %}
+
+                <img
+                    src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-L.jpg"
+                    alt="{{ book.title }} Cover"
+                    onerror="this.style.display='none'; document.getElementById('coverFallback').style.display='flex';"
+                >
+
+            {% endif %}
+
+
+            <div
+                id="coverFallback"
+                class="cover-fallback"
+                {% if not book.isbn %}
+                    style="display:flex;"
+                {% endif %}
+            >
+                📖
+            </div>
+
+        </div>
+
+
+        <!-- BOOK INFORMATION -->
+
+        <div class="book-info">
+
+            <h1>{{ book.title }}</h1>
+
+            <p class="author">
+                <strong>By {{ book.author }}</strong>
+            </p>
+
+
+            <div class="info-box">
+                <strong>Category:</strong>
+                {{ book.category or "Not specified" }}
+            </div>
+
+
+            <div class="info-box">
+                <strong>ISBN:</strong>
+                {{ book.isbn or "Not available" }}
+            </div>
+
+
+            <div class="info-box">
+                <strong>Shelf:</strong>
+                {{ book.shelf or "Not assigned" }}
+            </div>
+
+
+            <div class="info-box">
+                <strong>Total Copies:</strong>
+                {{ book.quantity }}
+            </div>
+
+
+            <div class="info-box">
+                <strong>Available Copies:</strong>
+
+                {% if book.available > 0 %}
+
+                    <span class="available">
+                        {{ book.available }}
+                    </span>
+
+                {% else %}
+
+                    <span class="unavailable">
+                        0
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ================= QR CODE ================= -->
+
+            {% if book.qr_code %}
+
+                <div class="qr-section">
+
+                    <h3>📱 Scan Book QR Code</h3>
+
+                    <p>
+                        Scan this QR code to open this book's details.
+                    </p>
+
+                    <img
+                        src="{{ url_for('static', filename=book.qr_code) }}"
+                        alt="QR Code for {{ book.title }}"
+                        class="qr-code"
+                    >
+
+                    <div class="qr-note">
+                        LIBRIX Digital Library
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ================= ISSUE STATUS ================= -->
+
+            {% if current_issue %}
+
+                <div class="already-issued">
+
+                    ✓ You have already issued this book.
+
+                    <br><br>
+
+                    Due Date:
+                    {{ current_issue.due_date.strftime('%d-%m-%Y') }}
+
+                </div>
+
+            {% elif book.available > 0 %}
+
+                <form
+                    method="POST"
+                    action="{{ url_for('issue_book', book_id=book.id) }}"
+                    class="issue-form"
+                >
+
+                    <button
+                        type="submit"
+                        class="issue-btn"
+                    >
+                        📚 Issue / Borrow This Book
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <div class="not-available">
+                    ✕ This book is currently not available.
+                </div>
+
+            {% endif %}
+
+
+            <!-- ================= ADMIN DELETE ================= -->
+
+            {% if session.get("role") == "admin" %}
+
+                <div class="delete-section">
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('delete_book', book_id=book.id) }}"
+                        onsubmit="return confirmDelete();"
+                    >
+
+                        <button
+                            type="submit"
+                            class="delete-btn"
+                        >
+                            🗑️ Delete This Book
+                        </button>
+
+                    </form>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h2>◈ LIBRIX</h2>
+
+    <p>
+        Smart library management for a smarter campus.
+    </p>
+
+    <p>
+        © 2026 Librix Digital Library
+    </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+    function confirmDelete() {
+        return confirm(
+            "Are you sure you want to delete this book?"
+        );
+    }
+</script>
+```
+
+</body>
+
+</html>
